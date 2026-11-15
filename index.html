@@ -4,200 +4,208 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Espace Élève • MP4 Agro-écologie : Plan Écophyto & IFT</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js pour le graphique OEB -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Google Fonts : Plus Jakarta Sans & Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #faf9f6;
-      color: #1e293b;
-    }
-    h1, h2, h3, h4, .font-display {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+    body { font-family: 'Inter', sans-serif; background-color: #faf9f6; color: #1e293b; }
+    h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
     @media print {
       body * { visibility: hidden; }
       #student-report-sheet, #student-report-sheet * { visibility: visible; }
-      #student-report-sheet {
-        position: absolute; left: 0; top: 0; width: 100%;
-        background: white !important; color: black !important; padding: 15px !important; display: block !important;
-      }
+      #student-report-sheet { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; padding: 15px !important; display: block !important; }
       .no-print { display: none !important; }
     }
-    ::-webkit-scrollbar { width: 7px; height: 7px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- BARRE SUPÉRIEURE FIXE -->
   <header class="bg-[#143d29] text-white shadow-md sticky top-0 z-50 border-b border-emerald-900 no-print">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="bg-[#246b47] p-2.5 rounded-xl border border-emerald-500/30">
-          <i data-lucide="sprout" class="w-6 h-6 text-amber-300"></i>
-        </div>
+        <div class="bg-[#246b47] p-2.5 rounded-xl border border-emerald-500/30"><i data-lucide="sprout" class="w-6 h-6 text-amber-300"></i></div>
         <div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-200 border border-amber-400/30 px-2.5 py-0.5 rounded-full">
-              MP4 Agro-écologie • Terminale Bac Pro CGEA
-            </span>
-            <span id="save-indicator" class="text-[11px] text-emerald-300 flex items-center gap-1">
-              <i data-lucide="cloud-check" class="w-3.5 h-3.5"></i> Sauvegarde auto active
-            </span>
+            <span class="text-[11px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-200 border border-amber-400/30 px-2.5 py-0.5 rounded-full">Terminale Bac Pro CGEA</span>
           </div>
-          <h1 class="text-base sm:text-xl font-display font-bold tracking-tight text-white mt-0.5">
-            Plan Écophyto & Réduction des Produits Phytosanitaires
-          </h1>
+          <h1 class="text-base sm:text-xl font-display font-bold tracking-tight text-white mt-0.5">Plan Écophyto & Réduction des Produits Phytosanitaires</h1>
         </div>
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
-        <!-- Chronomètre -->
         <div class="flex items-center gap-2 bg-[#0d291b] border border-emerald-800 px-3 py-1.5 rounded-xl">
           <i data-lucide="timer" class="w-4 h-4 text-amber-400"></i>
-          <div class="flex flex-col">
-            <span class="text-[10px] uppercase tracking-wider text-emerald-300 leading-none">Temps séance</span>
-            <span id="timer-display" class="font-mono font-bold text-base text-white leading-tight">50:00</span>
-          </div>
-          <div class="flex items-center gap-1 ml-1">
-            <button onclick="toggleTimer()" id="timer-btn" title="Démarrer / Pause" class="p-1.5 rounded-lg bg-[#246b47] hover:bg-emerald-600 text-white transition">
-              <i data-lucide="play" id="timer-icon" class="w-3.5 h-3.5"></i>
-            </button>
-            <button onclick="resetTimer()" title="Remettre à 50:00" class="p-1.5 rounded-lg bg-emerald-900 hover:bg-emerald-800 text-emerald-200 transition">
-              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
+          <span id="timer-display" class="font-mono font-bold text-base text-white">50:00</span>
+          <button onclick="toggleTimer()" id="timer-btn" class="p-1 rounded bg-[#246b47] text-white"><i data-lucide="play" id="timer-icon" class="w-3.5 h-3.5"></i></button>
         </div>
 
-        <!-- Bouton Remise à zéro -->
-        <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-          <span>Remise à zéro</span>
+        <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="trash-2" class="w-4 h-4"></i> Remise à zéro
         </button>
 
-        <!-- Bouton Export Copie / PDF -->
-        <button onclick="prepareAndPrintCopy()" class="bg-[#b45309] hover:bg-[#92400e] text-white text-xs sm:text-sm font-bold px-3.5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-sm border border-amber-400/30">
-          <i data-lucide="printer" class="w-4 h-4"></i>
-          <span>Exporter ma copie / PDF</span>
+        <button onclick="prepareAndPrintCopy()" class="bg-[#b45309] hover:bg-[#92400e] text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center gap-2">
+          <i data-lucide="printer" class="w-4 h-4"></i> Exporter / PDF
         </button>
       </div>
     </div>
 
-    <!-- NAVIGATION DES ÉTAPES -->
     <div class="bg-[#1b4d34] border-t border-emerald-800/80">
       <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
         <nav class="flex items-center gap-1.5 overflow-x-auto py-0.5">
-          <button onclick="switchTab('tab-1')" id="nav-tab-1" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition bg-[#faf9f6] text-[#143d29] shadow-sm whitespace-nowrap">
-            <span>1. Mise en situation</span>
-            <span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900">5 min</span>
-          </button>
-
-          <button onclick="requestPassword('tab-2', 'TERRE')" id="nav-tab-2" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-emerald-100 hover:bg-emerald-800/70 whitespace-nowrap">
-            <span>2. Dossiers & Activités 🔒</span>
-            <span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-900/80 text-emerald-200">25 min</span>
-          </button>
-
-          <button onclick="requestPassword('tab-3', 'DEPHY')" id="nav-tab-3" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-emerald-100 hover:bg-emerald-800/70 whitespace-nowrap">
-            <span>3. Ma Trace Écrite 🔒</span>
-            <span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-900/80 text-emerald-200">15 min</span>
-          </button>
-
-          <button onclick="requestPassword('tab-4', 'BILAN')" id="nav-tab-4" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-emerald-100 hover:bg-emerald-800/70 whitespace-nowrap">
-            <span>4. Bilan Flash 🔒</span>
-            <span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-900/80 text-emerald-200">5 min</span>
-          </button>
+          <button onclick="switchTab('tab-1')" id="nav-tab-1" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-[#faf9f6] text-[#143d29]">1. Mise en situation</button>
+          <button onclick="requestPassword('tab-2', 'TERRE')" id="nav-tab-2" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition text-emerald-100 hover:bg-emerald-800/70">2. Dossiers & Activités 🔒</button>
+          <button onclick="requestPassword('tab-3', 'DEPHY')" id="nav-tab-3" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition text-emerald-100 hover:bg-emerald-800/70">3. Ma Trace Écrite 🔒</button>
+          <button onclick="requestPassword('tab-4', 'BILAN')" id="nav-tab-4" class="nav-btn flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition text-emerald-100 hover:bg-emerald-800/70">4. Bilan Flash 🔒</button>
         </nav>
-
         <div class="flex items-center gap-2">
-          <label for="student-name" class="text-xs font-semibold text-emerald-200 whitespace-nowrap">Élève :</label>
-          <input type="text" id="student-name" oninput="saveAllData()" placeholder="Nom et Prénom..." class="text-xs bg-[#0d291b] text-white placeholder-emerald-400/60 border border-emerald-700 rounded-lg px-2.5 py-1.5 w-44 sm:w-52 focus:outline-none focus:border-amber-400" />
+          <label class="text-xs font-semibold text-emerald-200">Élève :</label>
+          <input type="text" id="student-name" oninput="saveAllData()" placeholder="Nom et Prénom..." class="text-xs bg-[#0d291b] text-white border border-emerald-700 rounded-lg px-2.5 py-1.5 w-44" />
         </div>
       </div>
     </div>
   </header>
 
-  <!-- CONTENU PRINCIPAL -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 no-print">
-
-    <!-- ONGLET 1 -->
+    <!-- ETAPE 1 -->
     <section id="tab-1" class="tab-content space-y-6">
-      <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
-        <div class="bg-gradient-to-r from-[#143d29] to-[#235c3f] px-6 py-5 text-white flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Étape 1 • Mise en situation professionnelle (5 min)</span>
-            <h2 class="text-xl sm:text-2xl font-display font-bold mt-1">Installation sur une exploitation bretonne en polyculture-élevage</h2>
-          </div>
-          <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20 text-xs sm:text-sm">
-            <strong>Exploitation support :</strong> GAEC de Kernévez • 120 ha SAU
-          </div>
-        </div>
-
-        <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-7 space-y-4 text-sm text-slate-700 leading-relaxed">
-            <p class="text-base">
-              Vous êtes en stage de fin de Terminale Bac Pro CGEA sur le <strong>GAEC de Kernévez</strong> (Côtes-d'Armor). Lors de la préparation de l'assolement avec l'exploitant et son conseiller agricole, trois difficultés majeures sont soulevées :
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div class="bg-amber-50/80 border border-amber-200 p-3.5 rounded-xl">
-                <div class="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase mb-1">
-                  <i data-lucide="flask-conical-off" class="w-4 h-4 text-amber-700"></i> Retrait de molécules
-                </div>
-                <p class="text-xs text-amber-950">Plusieurs substances actives ont été retirées du marché européen.</p>
-              </div>
-              <div class="bg-stone-100 border border-stone-200 p-3.5 rounded-xl">
-                <div class="flex items-center gap-2 text-stone-900 font-bold text-xs uppercase mb-1">
-                  <i data-lucide="coins" class="w-4 h-4 text-amber-800"></i> Baisse des marges
-                </div>
-                <p class="text-xs text-stone-800">Le poste « produits phytosanitaires » pèse sur les charges.</p>
-              </div>
-              <div class="bg-emerald-50/80 border border-emerald-200 p-3.5 rounded-xl">
-                <div class="flex items-center gap-2 text-emerald-900 font-bold text-xs uppercase mb-1">
-                  <i data-lucide="waves" class="w-4 h-4 text-emerald-700"></i> Environnement & Eau
-                </div>
-                <p class="text-xs text-emerald-950">Des parcelles longent un cours d'eau classé BCAE.</p>
-              </div>
-            </div>
-            <div class="bg-[#143d29] text-white p-4 rounded-xl border-l-4 border-amber-400">
-              <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Problématique de la séance</span>
-              <p class="text-base font-display font-semibold mt-1">
-                Comment le Plan Écophyto et les leviers agro-écologiques permettent-ils de réduire l'usage des phytos sans pénaliser la rentabilité ?
-              </p>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 bg-stone-50 border border-stone-200 rounded-xl p-5 flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex items-center gap-2 text-[#143d29] font-display font-bold text-base">
-                <i data-lucide="pen-tool" class="w-5 h-5 text-amber-700"></i> Votre réflexion initiale
-              </div>
-              <label for="q-intro" class="block text-xs font-semibold text-slate-800">Quelles solutions concrètes pour diminuer les traitements ?</label>
-              <textarea id="q-intro" oninput="saveAllData()" rows="6" placeholder="Rédigez ici vos premières hypothèses..." class="w-full text-sm p-3 rounded-xl border border-stone-300 bg-white focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
-            </div>
-            <button onclick="requestPassword('tab-2', 'TERRE')" class="w-full bg-[#143d29] hover:bg-[#1e563b] text-white font-semibold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm">
-              <span>Étape suivante ➔ (Mot de passe requis)</span>
-            </button>
-          </div>
-        </div>
+      <div class="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
+        <h2 class="text-xl font-display font-bold text-[#143d29]">Étape 1 • Mise en situation professionnelle (5 min)</h2>
+        <p class="text-sm text-slate-700">Stage sur le GAEC de Kernévez. Problématique : comment réduire l'usage des phytos sans pénaliser la rentabilité ?</p>
+        <textarea id="q-intro" oninput="saveAllData()" rows="5" placeholder="Votre réflexion initiale..." class="w-full text-sm p-3 rounded-xl border"></textarea>
+        <button onclick="requestPassword('tab-2', 'TERRE')" class="bg-[#143d29] text-white px-5 py-2.5 rounded-xl text-sm font-bold">Étape suivante ➔ (Mot de passe requis)</button>
       </div>
     </section>
 
-    <!-- ONGLET 2 -->
+    <!-- ETAPE 2 -->
     <section id="tab-2" class="tab-content hidden space-y-6">
-      <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-amber-800">Étape 2 • Exploitation documentaire & Simulation (25 min)</span>
-          <h2 class="text-lg sm:text-xl font-display font-bold text-slate-900">Analysez les 3 dossiers sources puis testez le simulateur d'IFT</h2>
+      <div class="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
+        <h2 class="text-xl font-display font-bold text-[#143d29]">Étape 2 • Dossiers & Activités (25 min)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div><label class="font-bold">1. Définition IFT :</label><textarea id="q-doc-1" oninput="saveAllData()" rows="3" class="w-full p-2 border rounded mt-1"></textarea></div>
+          <div><label class="font-bold">2. Variétés résistantes :</label><textarea id="q-doc-2" oninput="saveAllData()" rows="3" class="w-full p-2 border rounded mt-1"></textarea></div>
+          <div><label class="font-bold">3. Réglementation eau :</label><textarea id="q-doc-3" oninput="saveAllData()" rows="3" class="w-full p-2 border rounded mt-1"></textarea></div>
+          <div><label class="font-bold">4. Graphique OEB :</label><textarea id="q-doc-4" oninput="saveAllData()" rows="3" class="w-full p-2 border rounded mt-1"></textarea></div>
+        </div>
+        <button onclick="requestPassword('tab-3', 'DEPHY')" class="bg-[#143d29] text-white px-5 py-2.5 rounded-xl text-sm font-bold">Étape suivante ➔ (Mot de passe requis)</button>
+      </div>
+    </section>
+
+    <!-- ETAPE 3 -->
+    <section id="tab-3" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
+        <h2 class="text-xl font-display font-bold text-[#143d29]">Étape 3 • Ma Trace Écrite (15 min)</h2>
+        <div class="space-y-3 text-sm">
+          <div><label class="font-bold">Objectifs Écophyto :</label><input type="text" id="trace-ecophyto" oninput="saveAllData()" class="w-full p-2 border rounded" /></div>
+          <div><label class="font-bold">Définition IFT :</label><input type="text" id="trace-ift" oninput="saveAllData()" class="w-full p-2 border rounded" /></div>
+          <div><label class="font-bold">Leviers :</label><textarea id="trace-agro" oninput="saveAllData()" rows="3" class="w-full p-2 border rounded"></textarea></div>
+        </div>
+        <button onclick="requestPassword('tab-4', 'BILAN')" class="bg-[#143d29] text-white px-5 py-2.5 rounded-xl text-sm font-bold">Étape suivante ➔ (Mot de passe requis)</button>
+      </div>
+    </section>
+
+    <!-- ETAPE 4 -->
+    <section id="tab-4" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
+        <h2 class="text-xl font-display font-bold text-[#143d29]">Étape 4 • Bilan Flash (5 min)</h2>
+        <div id="quiz-list" class="space-y-3"></div>
+        <div class="flex gap-3">
+          <button onclick="evaluateQuiz()" class="bg-[#143d29] text-white px-5 py-2.5 rounded-xl font-bold text-sm">Calculer mon score</button>
+          <span id="quiz-score-val" class="font-bold text-lg text-emerald-800"></span>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div class="lg:col-span-7 bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-          <div class="flex border-b border-stone-200 bg-stone-1
+  <!-- MODAL MOT DE PASSE -->
+  <div id="password-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden p-4">
+    <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
+      <h3 class="text-lg font-bold">🔒 Étape verrouillée</h3>
+      <p class="text-sm text-slate-600">Entrez le mot de passe fourni par votre enseignant :</p>
+      <input type="password" id="password-input" class="w-full p-3 border rounded-xl font-mono text-center text-lg" placeholder="Mot de passe" />
+      <div class="flex justify-end gap-2">
+        <button onclick="closePasswordModal()" class="px-4 py-2 bg-stone-200 rounded-xl text-sm font-medium">Annuler</button>
+        <button onclick="validatePassword()" class="px-4 py-2 bg-[#143d29] text-white rounded-xl text-sm font-medium">Valider</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL REMISE À ZÉRO -->
+  <div id="reset-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden p-4">
+    <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
+      <h3 class="text-lg font-bold text-red-600">⚠️ Remise à zéro</h3>
+      <p class="text-sm text-slate-600">Voulez-vous effacer toutes vos réponses ? Action irréversible.</p>
+      <div class="flex justify-end gap-2">
+        <button onclick="closeResetModal()" class="px-4 py-2 bg-stone-200 rounded-xl text-sm font-medium">Annuler</button>
+        <button onclick="confirmReset()" class="px-4 py-2 bg-red-600 text-white rounded-xl text-sm font-medium">Effacer tout</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="student-report-sheet" class="hidden"></div>
+
+  <script>
+    lucide.createIcons();
+    let currentUnlockedTab = 'tab-1';
+    let pendingTargetTab = null;
+    let pendingPassword = '';
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    function requestPassword(targetTab, password) {
+      pendingTargetTab = targetTab;
+      pendingPassword = password;
+      document.getElementById('password-input').value = '';
+      document.getElementById('password-modal').classList.remove('hidden');
+      document.getElementById('password-input').focus();
+    }
+    function closePasswordModal() { document.getElementById('password-modal').classList.add('hidden'); }
+    function validatePassword() {
+      const val = document.getElementById('password-input').value.trim().toUpperCase();
+      if (val === pendingPassword) {
+        currentUnlockedTab = pendingTargetTab;
+        closePasswordModal();
+        switchTab(pendingTargetTab);
+      } else {
+        alert("Mot de passe incorrect.");
+      }
+    }
+
+    function openResetModal() { document.getElementById('reset-modal').classList.remove('hidden'); }
+    function closeResetModal() { document.getElementById('reset-modal').classList.add('hidden'); }
+    function confirmReset() { localStorage.clear(); location.reload(); }
+
+    const studentQuiz = [
+      { q: "1. Que mesure l'IFT ?", choices: ["Nombre de doses de référence / ha", "Coût en euros", "Volume d'eau"], answerIndex: 0 },
+      { q: "2. Largeur minimale bande enherbée cours d'eau ?", choices: ["2 m", "5 m", "10 m"], answerIndex: 1 },
+      { q: "3. Gain d'IFT variété résistante ?", choices: ["0,1 à 0,2", "0,6 à 0,7", "2,0"], answerIndex: 1 }
+    ];
+
+    function renderQuiz() {
+      document.getElementById('quiz-list').innerHTML = studentQuiz.map((item, idx) => `
+        <div class="bg-stone-50 p-3 rounded-xl border text-xs space-y-1.5">
+          <p class="font-bold">${item.q}</p>
+          ${item.choices.map((c, cIdx) => `<label class="block"><input type="radio" name="q-${idx}" value="${cIdx}"> ${c}</label>`).join('')}
+        </div>
+      `).join('');
+    }
+
+    function evaluateQuiz() {
+      let score = 0;
+      studentQuiz.forEach((item, idx) => {
+        const checked = document.querySelector(`input[name="q-${idx}"]:checked`);
+        if (checked && Number(checked.value) === item.answerIndex) score++;
+      });
+      document.getElementById('quiz-score-val').textContent = `${score} / 3`;
+    }
+
+    function saveAllData() {}
+    function prepareAndPrintCopy() { window.print(); }
+
+    window.onload = function() { renderQuiz(); };
+  </script>
+</body>
+</html>
