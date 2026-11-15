@@ -8,14 +8,13 @@
     <style>
         @media print {
             .no-print { display: none !important; }
-            body { background: white !important; color: black !important; font-size: 12pt; }
-            .print-break { page-break-before: always; }
-            input, textarea { border: 1px solid #000 !important; background: transparent !important; }
+            body { background: white !important; color: black !important; font-size: 11pt; }
+            input, textarea { border: 1px solid #333 !important; background: #fff !important; box-shadow: none !important; }
+            .tab-content { display: block !important; margin-bottom: 2rem; page-break-after: always; }
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
-    <!-- Header -->
     <header class="bg-emerald-700 text-white shadow-md no-print">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
@@ -23,46 +22,36 @@
                 <h1 class="text-2xl font-bold mt-1">Module Agro-Écologie : Stratégie Écophyto</h1>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded-lg font-medium transition flex items-center gap-1 shadow">
-                    Remise à zéro
-                </button>
-                <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm px-3 py-2 rounded-lg font-medium transition flex items-center gap-1 shadow">
-                    Imprimer / PDF
-                </button>
+                <button onclick="openResetModal()" class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded-lg font-medium transition shadow">Remise à zéro</button>
+                <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm px-3 py-2 rounded-lg font-medium transition shadow">Imprimer / PDF complet</button>
             </div>
         </div>
     </header>
 
-    <!-- Navigation Steps -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm no-print">
         <div class="max-w-6xl mx-auto px-4 flex overflow-x-auto gap-2 py-3">
             <button onclick="switchTab(1)" id="btn-tab-1" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-emerald-600 text-white shadow">1. Accroche</button>
-            <button onclick="switchTab(2)" id="btn-tab-2" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-slate-200 text-slate-700 hover:bg-slate-300">2. Documents & Analyse 🔒</button>
+            <button onclick="switchTab(2)" id="btn-tab-2" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-slate-200 text-slate-700 hover:bg-slate-300">2. Documents 🔒</button>
             <button onclick="switchTab(3)" id="btn-tab-3" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-slate-200 text-slate-700 hover:bg-slate-300">3. Simulateur IFT 🔒</button>
             <button onclick="switchTab(4)" id="btn-tab-4" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-slate-200 text-slate-700 hover:bg-slate-300">4. Trace écrite 🔒</button>
             <button onclick="switchTab(5)" id="btn-tab-5" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-slate-200 text-slate-700 hover:bg-slate-300">5. Bilan / Quiz 🔒</button>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
-
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
         <!-- ETAPE 1 -->
         <section id="tab-1" class="tab-content space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h2 class="text-xl font-bold text-emerald-800 mb-3">Étape 1 : Mise en situation professionnelle (5 min)</h2>
-                <p class="text-slate-600 mb-4">Imagine-toi exploitant agricole en polyculture-élevage ou grandes cultures. Face à la hausse des coûts des intrants, à la pression sociétale et au retrait progressif de certaines molécules phytosanitaires, ton objectif est de maintenir la performance économique de ton exploitation tout en réduisant l'utilisation des pesticides.</p>
-                
+                <p class="text-slate-600 mb-4">Imagine-toi exploitant agricole en polyculture-élevage ou grandes cultures. Face à la hausse des coûts des intrants et au retrait des pesticides, ton objectif est de maintenir la performance économique tout en réduisant les traitements.</p>
                 <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-lg mb-6">
-                    <h3 class="font-semibold text-emerald-900">Problématique de la séance :</h3>
-                    <p class="text-emerald-800 italic mt-1">« Comment repenser les systèmes de culture en agriculture conventionnelle pour réduire durablement la pression phytosanitaire sans pénaliser le rendement ? »</p>
+                    <h3 class="font-semibold text-emerald-900">Problématique :</h3>
+                    <p class="text-emerald-800 italic mt-1">« Comment repenser les systèmes de culture pour réduire durablement la pression phytosanitaire sans pénaliser le rendement ? »</p>
                 </div>
-
-                <label class="block font-medium text-slate-700 mb-2">Note tes premières impressions ou idées de solutions alternatives :</label>
-                <textarea id="note-etape1" oninput="saveData()" class="w-full h-32 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Ex : utiliser des variétés résistantes, désherber mécaniquement, allonger la rotation..."></textarea>
+                <label class="block font-medium text-slate-700 mb-2">Note tes premières idées :</label>
+                <textarea id="note-etape1" oninput="saveData()" class="w-full h-32 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Ex : variétés résistantes, désherbage mécanique..."></textarea>
             </div>
-
-            <div class="flex justify-end">
+            <div class="flex justify-end no-print">
                 <button onclick="requestPassword(2, 'TERRE')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-lg font-medium shadow transition">Étape suivante ➔</button>
             </div>
         </section>
@@ -71,37 +60,30 @@
         <section id="tab-2" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h2 class="text-xl font-bold text-emerald-800 mb-3">Étape 2 : Analyse documentaire (25 min)</h2>
-                <p class="text-slate-600 mb-4">Lis attentivement les documents du dossier et réponds aux questions ci-dessous.</p>
-                
                 <div class="space-y-6">
                     <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">1. Qu'est-ce que l'IFT (Indicateur de Fréquence de Traitements) et à quoi sert-il pour un agriculteur ?</p>
+                        <p class="font-semibold text-slate-800 mb-2">1. Qu'est-ce que l'IFT et à quoi sert-il pour un agriculteur ?[cite: 2]</p>
                         <textarea id="q1" oninput="saveData()" class="w-full h-24 p-3 border border-slate-300 rounded-lg bg-white" placeholder="Réponds ici..."></textarea>
                     </div>
-
                     <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">2. Quels sont les deux grands volets du plan Ecophyto 2+ et ses objectifs temporels de réduction de l'IFT ?</p>
+                        <p class="font-semibold text-slate-800 mb-2">2. Quels sont les objectifs temporels du plan Ecophyto 2+ ?[cite: 9]</p>
                         <textarea id="q2" oninput="saveData()" class="w-full h-24 p-3 border border-slate-300 rounded-lg bg-white" placeholder="Réponds ici..."></textarea>
                     </div>
-
                     <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">3. Quel est l'apport concret des variétés résistantes aux bio-agresseurs sur l'économie de traitement (exprimé en gain d'IFT) ?</p>
+                        <p class="font-semibold text-slate-800 mb-2">3. Quel est l'apport des variétés résistantes sur l'économie de traitement ?[cite: 4, 5]</p>
                         <textarea id="q3" oninput="saveData()" class="w-full h-24 p-3 border border-slate-300 rounded-lg bg-white" placeholder="Réponds ici..."></textarea>
                     </div>
-
                     <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">4. Cite deux dispositifs publics ou réseaux d'accompagnement qui soutiennent les agriculteurs dans cette transition (ex : MAEC, DEPHY, GIEE, HVE).</p>
+                        <p class="font-semibold text-slate-800 mb-2">4. Cite deux dispositifs publics ou réseaux d'accompagnement (ex : MAEC, DEPHY, HVE)[cite: 2, 3].</p>
                         <textarea id="q4" oninput="saveData()" class="w-full h-24 p-3 border border-slate-300 rounded-lg bg-white" placeholder="Réponds ici..."></textarea>
                     </div>
-
                     <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">5. Qu'impose la réglementation concernant les cours d'eau (Zones de Non-Traitement - ZNT et bandes enherbées) ?</p>
+                        <p class="font-semibold text-slate-800 mb-2">5. Qu'impose la réglementation concernant les cours d'eau (ZNT et bandes enherbées) ?[cite: 7, 8]</p>
                         <textarea id="q5" oninput="saveData()" class="w-full h-24 p-3 border border-slate-300 rounded-lg bg-white" placeholder="Réponds ici..."></textarea>
                     </div>
                 </div>
             </div>
-
-            <div class="flex justify-between">
+            <div class="flex justify-between no-print">
                 <button onclick="switchTab(1)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-2.5 rounded-lg font-medium transition">➔ Précédent</button>
                 <button onclick="requestPassword(3, 'DEPHY')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-lg font-medium shadow transition">Étape suivante ➔</button>
             </div>
@@ -110,109 +92,9 @@
         <!-- ETAPE 3 -->
         <section id="tab-3" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-3">Étape 3 : Simulateur d'IFT sur une culture de Blé tendre (10 min)</h2>
-                <p class="text-slate-600 mb-4">Teste l'impact de différents leviers agronomiques sur ton IFT global en blé tendre (référence de départ : IFT 4,5).</p>
-                
+                <h2 class="text-xl font-bold text-emerald-800 mb-3">Étape 3 : Simulateur IFT - Blé tendre (10 min)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center bg-slate-50 p-6 rounded-xl border border-slate-200">
                     <div class="space-y-4">
-                        <label class="flex items-center gap-3 cursor-pointer">
-                            <input type="checkbox" id="levier-var" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded">
-                            <span class="font-medium text-slate-700">Utilisation d'une variété résistante (gain -0,65 IFT)</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer">
-                            <input type="checkbox" id="levier-dsf" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded">
-                            <span class="font-medium text-slate-700">Désherbage mécanique / combiné (gain -0,80 IFT)</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer">
-                            <input type="checkbox" id="levier-oad" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded">
-                            <span class="font-medium text-slate-700">Outil d'aide à la décision - BSV / OAD (gain -0,50 IFT)</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer">
-                            <input type="checkbox" id="levier-boc" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded">
-                            <span class="font-medium text-slate-700">Implantation de haies / bandes enherbées (gain -0,35 IFT)</span>
-                        </label>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-inner border border-emerald-100 text-center">
-                        <p class="text-sm font-semibold text-slate-500 uppercase">IFT Calculé de l'exploitation</p>
-                        <div id="ift-value" class="text-5xl font-extrabold text-emerald-700 my-3">4,50</div>
-                        <p id="ift-status" class="text-sm font-medium text-amber-600">Objectif Ecophyto non atteint (Élevé)</p>
-                    </div>
-                </div>
-
-                <div class="mt-6">
-                    <label class="block font-medium text-slate-700 mb-2">Analyse tes résultats : quel combo de leviers te paraît le plus réaliste sur ton exploitation ?</label>
-                    <textarea id="note-simu" oninput="saveData()" class="w-full h-24 p-3 border border-slate-300 rounded-lg" placeholder="Rédige ton analyse..."></textarea>
-                </div>
-            </div>
-
-            <div class="flex justify-between">
-                <button onclick="switchTab(2)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-2.5 rounded-lg font-medium transition">➔ Précédent</button>
-                <button onclick="requestPassword(4, 'BRETAGNE')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-lg font-medium shadow transition">Étape suivante ➔</button>
-            </div>
-        </section>
-
-        <!-- ETAPE 4 -->
-        <section id="tab-4" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-3">Étape 4 : Trace écrite collaborative (10 min)</h2>
-                <p class="text-slate-600 mb-4">Complète le tableau de synthèse ci-dessous qui résume les axes essentiels de la séance.</p>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse border border-slate-300">
-                        <thead>
-                            <tr class="bg-emerald-800 text-white">
-                                <th class="p-3 border border-slate-300">Axes majeurs</th>
-                                <th class="p-3 border border-slate-300">Définition / Mécanisme clé</th>
-                                <th class="p-3 border border-slate-300">Exemple concret sur le terrain</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="p-3 border border-slate-300 font-semibold bg-slate-50">1. Indicateur (IFT)</td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-1-1" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Définition..."></td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-1-2" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Exemple..."></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 border border-slate-300 font-semibold bg-slate-50">2. Levier génétique</td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-2-1" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Définition..."></td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-2-2" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Exemple..."></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 border border-slate-300 font-semibold bg-slate-50">3. Dispositifs & Aides</td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-3-1" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Définition..."></td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-3-2" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Exemple..."></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 border border-slate-300 font-semibold bg-slate-50">4. Réglementation</td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-4-1" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Définition..."></td>
-                                <td class="p-3 border border-slate-300"><input type="text" id="te-4-2" oninput="saveData()" class="w-full p-2 border border-slate-200 rounded" placeholder="Exemple..."></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="flex justify-between">
-                <button onclick="switchTab(3)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-2.5 rounded-lg font-medium transition">➔ Précédent</button>
-                <button onclick="requestPassword(5, 'BILAN')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-lg font-medium shadow transition">Étape suivante ➔</button>
-            </div>
-        </section>
-
-        <!-- ETAPE 5 -->
-        <section id="tab-5" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-800 mb-3">Étape 5 : Bilan formatif / Quiz (5 min)</h2>
-                <p class="text-slate-600 mb-4">Vérifie tes acquis en répondant aux 5 questions ci-dessous.</p>
-
-                <div class="space-y-6">
-                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">1. Que mesure exactement l'IFT ?</p>
-                        <div class="space-y-2">
-                            <label class="flex items-center gap-2"><input type="radio" name="qf1" value="A" onchange="saveData()"> Le nombre de passages de tracteur par an</label>
-                            <label class="flex items-center gap-2"><input type="radio" name="qf1" value="B" onchange="saveData()"> Le nombre de doses de référence de produits phytosanitaires par hectare</label>
-                            <label class="flex items-center gap-2"><input type="radio" name="qf1" value="C" onchange="saveData()"> La quantité d'eau polluée dans les rivières</label>
-                        </div>
-                    </div>
-
-                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                        <p class="font-semibold text-slate-800 mb-2">2. Quel est l
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="levier-var" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded"><span class="font-medium text-slate-700">Variété résistante (gain -0,65 IFT)[cite: 5]</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="levier-dsf" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded"><span class="font-medium text-slate-700">Désherbage mécanique (gain -0,80 IFT)</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="levier-oad" onchange="updateSimulateur()" class="w-5 h-5 text-emerald-600 rounded"><span class="font-medium text-slate-700">Outil d'aide à la décision -
