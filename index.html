@@ -59,12 +59,20 @@
       body.print-all * { visibility: visible; }
       body.print-all { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       body.print-all #student-report-sheet { display: none !important; }
-      body.print-all main { display: block !important; }
+      /* Le conteneur principal porte aussi .no-print pour l'interface écran :
+         on le réaffiche uniquement pour l'impression intégrale du cours. */
+      body.print-all main.no-print { display: block !important; }
       body.print-all #print-all-header { display: block !important; }
       body.print-all .tab-content { display: none !important; }
       body.print-all .tab-content.print-include { display: block !important; }
       body.print-all .tab-content.print-include ~ .tab-content.print-include { break-before: page; }
-      body.print-all .tab-content.print-include .doc-view { display: block !important; margin-bottom: 16px; }
+      body.print-all .tab-content.print-include .doc-view {
+        display: block !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin-bottom: 16px;
+      }
       body.print-all textarea, body.print-all input.trace-input { display: none !important; }
       body.print-all .print-mirror { display: block !important; }
       body.print-all button, body.print-all .lock-badge { display: none !important; }
@@ -1378,10 +1386,10 @@
       document.getElementById('print-all-score').textContent = lastQuizScore || 'Non évalué';
 
       const tabs = Array.from(document.querySelectorAll('.tab-content'));
-      const lockedCount = tabs.filter(sec => !isTabUnlocked(sec.id)).length;
-      document.getElementById('print-all-note').textContent = lockedCount > 0
-        ? 'Seules les étapes déverrouillées sont imprimées.'
-        : '';
+      // L'impression du cours complet inclut les 4 étapes, même si elles sont
+      // verrouillées dans le parcours interactif de l'élève.
+      document.getElementById('print-all-note').textContent =
+        'Version papier complète : les quatre étapes et les trois documents sont inclus.';
 
       // Copie des réponses dans des blocs imprimables (évite les champs coupés à l'impression)
       document.querySelectorAll('textarea, input.trace-input').forEach(el => {
@@ -1391,7 +1399,7 @@
         el.insertAdjacentElement('afterend', div);
       });
 
-      tabs.forEach(sec => { if (isTabUnlocked(sec.id)) sec.classList.add('print-include'); });
+      tabs.forEach(sec => sec.classList.add('print-include'));
       document.body.classList.add('print-all');
       window.print();
     }
